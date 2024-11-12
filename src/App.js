@@ -2,13 +2,18 @@ import logo from './logo.svg';
 import './App.css';
 
 import React, { Component } from 'react'
+import Navbar from './components/Navbar.js'
+import News from './components/News.js';
+import NewsItem from './components/NewsItem.js';
 
 export default class App extends Component {
-  c='wafa e ehd'
+//render() method classBase component mein use kiya jata hai and yah pehale jsx ko html mein compile karta hai fir screen par html ko run karta hai
   render() {
     return (
       <div>
-        Hello my second react application {this.c}
+        <Navbar/>
+        <News/>
+        
       </div>
     )
   }
