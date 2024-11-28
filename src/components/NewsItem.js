@@ -8,7 +8,7 @@ export class NewsItem extends Component {
     return (
       <>
       <div className='my-3'>
-        <div className ="card" style = {{width: "18rem"}}>
+        <div className ="card" >
           <img src = {!imageUrl ? "https://www.investors.com/wp-content/uploads/2017/04/stock-wallstreet-shutter.jpg" : imageUrl} className='card-img-top' alt='...'/> {/*agar kisi component mein 'imageurl' nahi hai to ye wala use kar lo barna 'imageUrl' use kar lo*/}
           <div className="card-body">
             <h5 className="card-title">{title}...</h5>

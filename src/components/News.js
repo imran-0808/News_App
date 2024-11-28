@@ -14,7 +14,7 @@ export class News extends Component {
   } 
 
   async componentDidMount(){ //'cDM' ek method hai jo render() method ke baad compile hota hai ye apna all data render() method ke baad show karega
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=71f662a307b949e3a670d52a2093d552&page=1&pageSize=${this.props.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=1&pageSize=${this.props.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
     let data = await fetch(url)
     this.setState({loading: true})
     let parsedData = await data.json()
@@ -24,7 +24,7 @@ export class News extends Component {
    
   preBtn = async ()=>{
     console.log('previous btn')
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true})
     let data = await fetch(url)
     let parsedData = await data.json() 
@@ -38,7 +38,7 @@ export class News extends Component {
   nextBtn = async ()=>{
     console.log('next btn')
     if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))) {    
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
     this.setState({loading: true}) //yaha await jaise hee data ke liye request bhejega vaise hee loading true ho jayegi
     let data = await fetch(url)
     let parsedData = await data.json() 

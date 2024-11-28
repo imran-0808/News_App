@@ -4,10 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { BrowserRouter } from 'react-router-dom'; //react router dom ko use ke liye pehale yaha import karte hain 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+  <BrowserRouter> {/*fir app ko yaha wrap kiya*/}
+      <App />
+  </BrowserRouter> 
   </React.StrictMode>
 );
 
