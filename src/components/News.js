@@ -3,53 +3,43 @@ import NewsItem from './NewsItem'
 import Spinner from './spinner'
 
 export class News extends Component {
+  static defaultProps = {
+    pageSize: 8,
+    category: 'general',
+  }
 
   constructor(){ //used constructor
     super(); 
     this.state = { //yaha constructor ki help se 'state' ko set kiya
       articles:[], //and yaha articles ko ek array declare kiya
       loading: false, //yaha loading name ka ek variable banaya jab bhi koi cheej load hogi to loading 'true' ho jayegi and fir 'false' ho jayegi
-      page: 1 //page ko page 1 par set kiya
+      page: 1, //page ko page 1 par set kiya
+      pageSize:5  //give the no. of news item in page
     }
   } 
 
-  async componentDidMount(){ //'cDM' ek method hai jo render() method ke baad compile hota hai ye apna all data render() method ke baad show karega
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=1&pageSize=${this.props.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+  async updateNews(){
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=5bb2c3dba459479482a25a5fde059091&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+    this.setState({loading: true}) 
     let data = await fetch(url)
-    this.setState({loading: true})
     let parsedData = await data.json()
     console.log(parsedData) 
     this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false})
   }
+
+  async componentDidMount(){ //'cDM' ek method hai jo render() method ke baad compile hota hai ye apna all data render() method ke baad show karega
+    this.updateNews()
+  } 
    
   preBtn = async ()=>{
-    console.log('previous btn')
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
-    this.setState({loading: true})
-    let data = await fetch(url)
-    let parsedData = await data.json() 
-    this.setState({
-      page: this.state.page-1,
-      articles: parsedData.articles,
-      loading: false
-    })
+      this.setState({page: this.state.page - 1})
+      this.updateNews()
   }
 
   nextBtn = async ()=>{
-    console.log('next btn')
-    if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))) {    
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
-    this.setState({loading: true}) //yaha await jaise hee data ke liye request bhejega vaise hee loading true ho jayegi
-    let data = await fetch(url)
-    let parsedData = await data.json() 
-    this.setState({loading: false}) //aur jaise hee json() se data mil jayega to loading false ho jayegi
-    this.setState({  
-      page: this.state.page+1,
-      articles: parsedData.articles,
-      loading: false
-    })
-  }
-}
+    this.setState({page: this.state.page + 1})
+    this.updateNews()
+ }
 
   render() {
     return (
