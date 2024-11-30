@@ -43,7 +43,7 @@ export class News extends Component {
     let data = await fetch(url)
     let parsedData = await data.json() 
     this.setState({loading: false}) //aur jaise hee json() se data mil jayega to loading false ho jayegi
-    this.setState({
+    this.setState({  
       page: this.state.page+1,
       articles: parsedData.articles,
       loading: false
@@ -60,8 +60,9 @@ export class News extends Component {
 
             {!this.state.loading && this.state.articles.map((element) =>{ //agar loading nahi ho rahi hai to ye dikhao barna mat dikhao and yaha articles component ko use kiya
             return <div className="col-md-4" key={element.url}>     {/*and yaha return kiya, url ko unique key dee*/}
+          
             {/*aur jo props 'NewsItem.js' mein pass kiye uske variable ko yaha pull karke usme value assign ki, 'slice' used show for limited word*/}
-            <NewsItem title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0,85) :""} imageUrl={element.urlToImage} newsUrl={element.url}/>
+            <NewsItem title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0,85) :""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name}/>
           </div> 
           })}
       </div>  
