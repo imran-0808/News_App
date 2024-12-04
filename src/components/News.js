@@ -3,23 +3,28 @@ import NewsItem from './NewsItem'
 import Spinner from './spinner'
 
 export class News extends Component {
-  static defaultProps = {
-    pageSize: 8,
-    category: 'general',
-  }
+  // static defaultProps = {
+  //   pageSize: 8,
+  //   category: 'general',
+  // }
 
-  constructor(){ //used constructor
-    super(); 
+  capitalize=(str) =>{ //used capitalize func yah letter ko capitalize karega
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  constructor(props){ //used constructor
+    super(props); 
     this.state = { //yaha constructor ki help se 'state' ko set kiya
       articles:[], //and yaha articles ko ek array declare kiya
       loading: false, //yaha loading name ka ek variable banaya jab bhi koi cheej load hogi to loading 'true' ho jayegi and fir 'false' ho jayegi
       page: 1, //page ko page 1 par set kiya
       pageSize:5  //give the no. of news item in page
     }
+    document.title = `${this.capitalize(this.props.category)} - get daily free news`; //change title according category
+
   } 
 
   async updateNews(){
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=5bb2c3dba459479482a25a5fde059091&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
     this.setState({loading: true}) 
     let data = await fetch(url)
     let parsedData = await data.json()
@@ -44,7 +49,7 @@ export class News extends Component {
   render() {
     return (
       <div className='container my-3'>
-        <h1 className="text-center">NewsMonkey - Top Headlines</h1>
+        <h1 className="text-center">NewsMonkey - Top Headlines on {this.capitalize(this.props.category)}</h1>
         {this.state.loading && <Spinner/>} {/*yaha spinner component ko use kiya*/}
           <div className="row">       {/*use for the row taki item row mein aaye*/}
 
