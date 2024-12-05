@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import Spinner from './spinner'
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroll-component"; //import for infinite scrolling
 
  export class News extends Component {
  /* static defaultProps = {
@@ -26,12 +26,18 @@ import InfiniteScroll from "react-infinite-scroll-component";
   }
 
   async updateNews() {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+    this.props.changeProgress(0); //yah Top progressing ke liye as a props pass kiya
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=5bb2c3dba459479482a25a5fde059091&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
     this.setState({ loading: true })
     let data = await fetch(url)
     let parsedData = await data.json()
     console.log(parsedData)
-    this.setState({ articles: parsedData.articles, totalResults: parsedData.totalResults, loading: false })
+    this.setState({ 
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+      loading: false 
+    })
+    this.props.changeProgress(100);//yaha progressing 100 tak jayegi
   }
 
   async componentDidMount() { //'cDM' ek method hai jo render() method ke baad compile hota hai ye apna all data render() method ke baad show karega
@@ -50,7 +56,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 })
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=71f662a307b949e3a670d52a2093d552&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=${this.props.category}&apiKey=5bb2c3dba459479482a25a5fde059091&page=${this.state.page}&pageSize=${this.state.pageSize}` //yaha pageSize ko props kiya aur fir 'apps.js' mein update kiya
     let data = await fetch(url)
     let parsedData = await data.json()
     console.log(parsedData)
@@ -69,8 +75,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
         <InfiniteScroll //It is for scroll bar
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
-          loader={<h4>{<Spinner />}</h4>}
+          hasMore={this.state.articles.length == this.state.totalResults}
+          loader={<Spinner />}
         >
 
         <div className="container">

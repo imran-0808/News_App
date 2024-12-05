@@ -18,9 +18,7 @@ export class Navbar extends Component {
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav melinkuto mb-2 mb-lg-0">
-        <li className="nav-item">
-        <Link className="nav-link" aria-current="page" to="/Home">Home</Link>
-        </li>
+        
                             {/*yaha <Link> tag ki place par <Link> ka use kiya isse page reloade nahi hota hai*/}
         <li className="nav-item"><Link className="nav-link" to="/general">general</Link></li>
         <li className="nav-item"><Link className="nav-link" to="/business">business</Link></li>
